@@ -9,17 +9,21 @@
   outputs = { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            android_sdk.accept_license = true;
+            allowUnfree = true;  # Allow unfree packages
+          };
+        };
         flutter = pkgs.flutter;
         androidSdk = pkgs.androidsdk;
-        androidCmdlineTools = pkgs.androidsdk.cmdline-tools;
         dart = pkgs.dart;
       in {
         devShell = pkgs.mkShell {
-          buildInputs = [ flutter androidSdk androidCmdlineTools dart ];
+          buildInputs = [ flutter androidSdk dart ];
           shellHook = ''
             export ANDROID_HOME=${androidSdk}
-            export PATH=${flutter}/bin:${androidCmdlineTools}/bin:$PATH
           '';
         };
       });
