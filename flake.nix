@@ -17,7 +17,7 @@ outputs = { self, nixpkgs, flake-utils }:
       buildToolsVersion = "34.0.0";
       # custom sdk for lighter build
       androidComposition = pkgs.androidenv.composeAndroidPackages {
-        buildToolsVersions = [ buildToolsVersion "34.0.0" ];
+        buildToolsVersions = [ buildToolsVersion "28.0.3" ];
         platformVersions = [ "34" ];
         abiVersions = [ "arm64-v8a" ];
       };
